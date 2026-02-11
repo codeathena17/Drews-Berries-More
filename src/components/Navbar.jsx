@@ -1,83 +1,196 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router";
+import { Page } from "../constants";
+import { Menu, X, Leaf } from "lucide-react";
 
-const Navbar = () => {
-  // Mock states for UI checking
+const Navbar = ({ currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMember = true; // Toggle to check member view
-  const credits = 120;
-  const currentPath = '/about'; 
 
-  const navItems = [
-    { label: 'Association', path: '/about' },
-    { label: 'Membership', path: '/membership' },
-    { label: 'Farm Offerings', path: '/exchange' },
-    { label: 'Cabins & Stays', path: '/stays' },
-    { label: 'Mutual Aid', path: '/aid' },
-    { label: 'Contact', path: '/contact' },
-  ];
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
 
-  // Helper for conditional classes
-  const getLinkClass = (path, isMobile = false) => {
-    const base = isMobile ? "block text-lg" : "text-sm font-medium transition-colors";
-    const active = currentPath === path ? 'text-earth-deep font-bold' : 'text-earth-sage hover:text-earth-deep';
-    return `${base} ${active}`;
-  };
+  // Common class for the animated underline effect
+  const underlineStyle =
+    "relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-[#4B5320] after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100";
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#FDFBF7]/95 backdrop-blur-md border-b border-earth-tan" style={{ fontFamily: 'sans-serif' }}>
+    <nav className="sticky top-0 z-50 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-stone-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
-          
-          {/* Logo Placeholder */}
+        <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-earth-deep">LOGO</span>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a key={item.path} href={item.path} className={getLinkClass(item.path)}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Member Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            {isMember && (
-              <div className="bg-earth-cream px-4 py-2 rounded-full flex items-center gap-2 border border-earth-tan">
-                <span className="text-[10px] uppercase tracking-tighter font-bold text-earth-deep">Credits</span>
-                <span className="text-lg font-bold text-earth-deep">{credits}</span>
-              </div>
-            )}
-            <a
-              href="/membership"
-              className="bg-earth-green text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-earth-deep transition-all shadow-sm"
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="flex items-center gap-2 group transition-all"
             >
-              {isMember ? 'My Portal' : 'Member Access'}
-            </a>
+              <div className="w-10 h-10 bg-[#4B5320] rounded-full flex items-center justify-center text-white">
+                <Leaf size={20} />
+              </div>
+              <div className="flex flex-col items-start leading-tight">
+                <span className="text-xl font-bold text-[#2D2A26] serif">
+                  Drew’s Berries
+                </span>
+                <span className="text-[10px] uppercase tracking-widest text-[#5C4033] font-medium">
+                  Drusus Foundation
+                </span>
+              </div>
+            </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-earth-deep">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-            </svg>
-          </button>
+          <div className="hidden md:flex items-center space-x-8">
+            <Link
+              to="/"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.Home
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.About
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              About
+            </Link>
+            <Link
+              to="/membership"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.Membership
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              Membership
+            </Link>
+            <Link
+              to="/offerings"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.Offerings
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              Offerings
+            </Link>
+            <Link
+              to="/cabins"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.Cabins
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              Cabins
+            </Link>
+            <Link
+              to="/contact"
+              className={`text-sm font-medium transition-colors hover:text-[#4B5320] ${underlineStyle} ${
+                currentPage === Page.Contact
+                  ? "text-[#4B5320] after:scale-x-100"
+                  : "text-stone-600"
+              }`}
+            >
+              Contact
+            </Link>
+
+            <Link
+              to="/contact"
+              className="bg-[#4B5320] text-white px-6 py-2.5 rounded-sm text-sm font-medium hover:bg-[#3d441a] transition-all shadow-sm"
+            >
+              Join the Association
+            </Link>
+          </div>
+
+          <div className="md:hidden flex items-center">
+            <button onClick={toggleMenu} className="text-stone-600 p-2">
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden bg-[#FDFBF7] border-b border-earth-tan px-4 py-6 space-y-4 shadow-xl">
-          {navItems.map((item) => (
-            <a key={item.path} href={item.path} className={getLinkClass(item.path, true)}>
-              {item.label}
-            </a>
-          ))}
-          <a href="/membership" className="block w-full text-center bg-earth-green text-white px-6 py-4 rounded-full text-sm font-bold shadow-md">
-            {isMember ? 'My Portal' : 'Member Access'}
-          </a>
+        <div className="md:hidden bg-[#FDFBF7] border-b border-stone-100 py-4 px-4 space-y-4">
+          <Link
+            to="/"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.Home
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.About
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            About
+          </Link>
+          <Link
+            to="/membership"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.Membership
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            Membership
+          </Link>
+          <Link
+            to="/offerings"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.Offerings
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            Offerings
+          </Link>
+          <Link
+            to="/cabins"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.Cabins
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            Cabins
+          </Link>
+          <Link
+            to="/contact"
+            onClick={closeMenu}
+            className={`block w-full text-left px-4 py-2 text-base font-medium ${
+              currentPage === Page.Contact
+                ? "text-[#4B5320] bg-stone-50"
+                : "text-stone-600"
+            }`}
+          >
+            Contact
+          </Link>
+
+          <Link
+            to="/contact"
+            onClick={closeMenu}
+            className="block w-full bg-[#4B5320] text-white py-3 rounded-sm font-medium text-center"
+          >
+            Join the Association
+          </Link>
         </div>
       )}
     </nav>
