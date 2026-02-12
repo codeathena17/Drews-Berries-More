@@ -48,7 +48,7 @@ const Navbar = () => {
                 <Leaf size={20} />
               </div>
               <div className="flex flex-col items-start leading-none">
-                <span className="text-xl font-serif font-black text-[#2D2A26] tracking-tighter">
+                <span className="text-xl  font-serif font-black text-[#2D2A26] tracking-tighter">
                   Drew’s Berries
                 </span>
                 <span className="text-[9px] uppercase tracking-[0.3em] text-[#4B5320] font-bold mt-1.5">

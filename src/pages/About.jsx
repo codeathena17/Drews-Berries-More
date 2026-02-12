@@ -3,7 +3,7 @@ import React from "react";
 function About() {
   return (
     <div className="bg-[#fdfcf9] min-h-screen pb-24 font-sans text-stone-800">
-      <div className="relative pt-16 pb-20 px-6 text-center overflow-hidden">
+      <div className="relative pt-10 pb-20 px-6 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full opacity-[0.03] pointer-events-none z-0">
           <img
             src="https://www.transparenttextures.com/patterns/felt.png"
@@ -21,9 +21,9 @@ function About() {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-serif text-stone-900 mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-serif font-black text-stone-900 mb-6 tracking-tight">
             Our{" "}
-            <span className="italic font-medium text-[#4B5320]">
+            <span className="font-medium text-[#4B5320]">
               Foundation
             </span>
           </h1>

@@ -69,12 +69,6 @@ const Home = () => {
             </p>
           </div>
         </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 animate-bounce hidden md:block">
-          <div className="w-6 h-10 border-2 border-white/20 rounded-full flex justify-center p-1">
-            <div className="w-1.5 h-1.5 bg-white/60 rounded-full"></div>
-          </div>
-        </div>
       </section>
 
       <section className="relative py-32 overflow-hidden border-b border-stone-100">
