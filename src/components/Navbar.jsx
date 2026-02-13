@@ -7,9 +7,19 @@ const Navbar = () => {
   const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
+  
+  // Updated closeMenu to also force scroll to top
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
 
-  // Close menu on resize (prevents mobile menu staying open if desktop view is triggered)
+  // Force scroll to top on any link click (Desktop & Mobile)
+  const handleNavLinkClick = () => {
+    closeMenu();
+    window.scrollTo(0, 0);
+  };
+
   useEffect(() => {
     const handleResize = () => { if (window.innerWidth > 768) closeMenu(); };
     window.addEventListener('resize', handleResize);
@@ -18,7 +28,6 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // Consistency Fix: Standardized typography & animation classes
   const navLinkClasses = (path) => `
     text-[13px] font-sans font-bold uppercase tracking-[0.15em] transition-all duration-300
     relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-full 
@@ -27,6 +36,7 @@ const Navbar = () => {
     ${isActive(path) ? "text-[#4B5320] after:scale-x-100" : "text-stone-600 hover:text-[#4B5320]"}
   `;
 
+  // Keeping your exact original labels
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
@@ -41,14 +51,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between h-20">
           
-          {/* Logo Area - Consistent Font Serif */}
           <div className="flex items-center">
-            <Link to="/" onClick={closeMenu} className="flex items-center gap-3 group">
+            <Link to="/" onClick={handleNavLinkClick} className="flex items-center gap-3 group">
               <div className="w-10 h-10 bg-[#4B5320] rounded-xl flex items-center justify-center text-white shadow-lg shadow-[#4B5320]/20 group-hover:rotate-6 transition-transform">
                 <Leaf size={20} />
               </div>
               <div className="flex flex-col items-start leading-none">
-                <span className="text-xl  font-serif font-black text-[#2D2A26] tracking-tighter">
+                <span className="text-xl font-serif font-black text-[#2D2A26] tracking-tighter">
                   Drew’s Berries
                 </span>
                 <span className="text-[9px] uppercase tracking-[0.3em] text-[#4B5320] font-bold mt-1.5">
@@ -58,23 +67,27 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
-              <Link key={link.name} to={link.path} className={navLinkClasses(link.path)}>
+              <Link 
+                key={link.name} 
+                to={link.path} 
+                className={navLinkClasses(link.path)}
+                onClick={handleNavLinkClick}
+              >
                 {link.name}
               </Link>
             ))}
 
             <Link
               to="/membership"
+              onClick={handleNavLinkClick}
               className="bg-[#4B5320] text-white px-6 py-2.5 rounded-xl text-[11px] font-sans font-black uppercase tracking-widest hover:bg-[#3d441a] transition-all shadow-xl shadow-[#4B5320]/10 active:scale-95"
             >
               Join Us
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMenu}
@@ -86,14 +99,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Enhanced with consistent styling */}
       {isMenuOpen && (
         <div className="md:hidden absolute w-full bg-[#FDFBF7] border-b border-stone-200 shadow-2xl py-8 px-6 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              onClick={closeMenu}
+              onClick={handleNavLinkClick}
               className={`block w-full text-left px-4 py-3 text-sm font-sans font-bold uppercase tracking-widest rounded-xl transition-all ${
                 isActive(link.path)
                   ? "text-[#4B5320] bg-[#4B5320]/5"
@@ -106,7 +118,7 @@ const Navbar = () => {
           <div className="pt-4">
             <Link
               to="/membership"
-              onClick={closeMenu}
+              onClick={handleNavLinkClick}
               className="block w-full bg-[#4B5320] text-white py-4 rounded-xl font-sans font-black uppercase tracking-widest text-center shadow-lg"
             >
               Join the Association

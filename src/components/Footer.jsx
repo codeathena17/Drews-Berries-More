@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; // Updated to react-router-dom for consistency
 
 function Footer() {
+  // Logic to handle scroll to top
+  const handleScrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", 
+    });
+  };
+
   return (
     <footer className="bg-[#4b5320] text-stone-200 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,20 +29,24 @@ function Footer() {
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white mb-6">
               Explore
             </h4>
             <ul className="space-y-4">
               <li>
-                <Link to="/" className="hover:text-white transition-colors">
+                <Link 
+                  to="/" 
+                  onClick={handleScrollToTop} 
+                  className="hover:text-white transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/about"
+                  onClick={handleScrollToTop}
                   className="hover:text-white transition-colors"
                 >
                   About
@@ -43,6 +55,7 @@ function Footer() {
               <li>
                 <Link
                   to="/membership"
+                  onClick={handleScrollToTop}
                   className="hover:text-white transition-colors"
                 >
                   Membership
@@ -51,6 +64,7 @@ function Footer() {
               <li>
                 <Link
                   to="/offerings"
+                  onClick={handleScrollToTop}
                   className="hover:text-white transition-colors"
                 >
                   Offerings
@@ -59,6 +73,7 @@ function Footer() {
               <li>
                 <Link
                   to="/cabins"
+                  onClick={handleScrollToTop}
                   className="hover:text-white transition-colors"
                 >
                   Cabins
