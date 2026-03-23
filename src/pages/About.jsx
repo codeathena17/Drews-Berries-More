@@ -41,8 +41,8 @@ function About() {
             </h2>
             <div className="w-16 h-0.5 bg-[#4B5320]/20"></div>
             <p className="text-stone-600 leading-relaxed text-lg">
-              Derived from an ancient word for{" "}
-              <strong>"strong foundation,"</strong> the Drusus Foundation was
+              Derived from the Roman word for{" "}
+              <strong>"strong"</strong> (Drusus), meaning "strong foundation," the Drusus Foundation was
               established to create a sanctuary of agricultural stewardship and
               spiritual growth.
             </p>

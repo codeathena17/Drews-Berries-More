@@ -49,13 +49,13 @@ function Contact() {
                   <div className="group cursor-pointer">
                     <p className="text-[10px] uppercase tracking-[0.3em] text-white font-bold mb-2">Electronic Mail</p>
                     <p className="text-xl font-medium border-b border-white/10 pb-2 group-hover:border-[#4B5320] transition-colors duration-500">
-                      steward@drusus.org
+                     Drew@drewsberriesmore.com 
                     </p>
                   </div>
 
                   <div className="group cursor-pointer">
                     <p className="text-[10px] uppercase tracking-[0.3em] text-white font-bold mb-2">The Land</p>
-                    <p className="text-xl font-medium">Yamhill County, Oregon</p>
+                    <p className="text-xl font-medium">Josephine County, Oregon</p>
                     <div className="flex items-center gap-2 text-white text-xs mt-2 uppercase tracking-widest font-bold">
                       <ShieldCheck size={14} className="text-white" />
                       Members Only Access
