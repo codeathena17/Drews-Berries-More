@@ -7,20 +7,36 @@ function Contact() {
   const onSubmit = async (event) => {
     event.preventDefault();
     setResult("Sending....");
+    
+    const apiKey = import.meta.env.VITE_WEB3FORMS_KEY?.toString().trim();
+    console.log("API Key:", apiKey);
+    
+    if (!apiKey) {
+      setResult("Error: API key not configured. Check .env file");
+      console.error("VITE_WEB3FORMS_KEY is not defined in environment");
+      return;
+    }
+    
     const formData = new FormData(event.target);
-    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
+    formData.set("access_key", apiKey);
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
 
-    const data = await response.json();
-    if (data.success) {
-      setResult("Form Submitted Successfully");
-      event.target.reset();
-    } else {
-      setResult("Error");
+      const data = await response.json();
+      console.log("Response:", data);
+      
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        event.target.reset();
+      } else {
+        setResult("Error: " + (data.message || "Failed"));
+      }
+    } catch (error) {
+      setResult("Error: " + error.message);
     }
   };
 
