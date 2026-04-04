@@ -1,7 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Mail, MapPin, ArrowRight, ShieldCheck, Leaf, Globe } from "lucide-react";
 
 function Contact() {
+  const [result, setResult] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_KEY);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      setResult("Error");
+    }
+  };
+
   return (
     <div className="bg-[#fdfcf9] min-h-screen font-sans text-stone-800 selection:bg-[#4B5320]/10">
       
@@ -75,12 +97,15 @@ function Contact() {
 
           {/* Right Panel: The Stationery Form */}
           <div className="lg:col-span-7 p-12 md:p-20 bg-[#FDFBF7]">
-            <form className="space-y-10">
+            <form className="space-y-10" onSubmit={onSubmit}>
+              <input type="hidden" name="access_key" value={import.meta.env.VITE_WEB3FORMS_KEY} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="group relative">
                   <label className="text-[12px] font-black uppercase tracking-[0.2em] text-stone-400 group-focus-within:text-[#4B5320] transition-colors">First Name</label>
                   <input 
                     type="text" 
+                    name="first_name"
+                    required
                     className="w-full bg-transparent border-b border-stone-200 py-3 outline-none focus:border-[#4B5320] transition-all font-serif text-lg placeholder:text-stone-300"
                     placeholder="E.g. Samuel"
                   />
@@ -89,6 +114,8 @@ function Contact() {
                   <label className="text-[12px] font-black uppercase tracking-[0.2em] text-stone-400 group-focus-within:text-[#4B5320] transition-colors">Last Name</label>
                   <input 
                     type="text" 
+                    name="last_name"
+                    required
                     className="w-full bg-transparent border-b border-stone-200 py-3 outline-none focus:border-[#4B5320] transition-all font-serif text-lg placeholder:text-stone-300"
                     placeholder="E.g. Miller"
                   />
@@ -99,6 +126,8 @@ function Contact() {
                 <label className="text-[12px] font-black uppercase tracking-[0.2em] text-stone-400 group-focus-within:text-[#4B5320] transition-colors">Email Address</label>
                 <input 
                   type="email" 
+                  name="email"
+                  required
                   className="w-full bg-transparent border-b border-stone-200 py-3 outline-none focus:border-[#4B5320] transition-all font-serif text-lg placeholder:text-stone-300"
                   placeholder="samuel@example.com"
                 />
@@ -106,7 +135,7 @@ function Contact() {
 
               <div className="group relative">
                 <label className="text-[12px] font-black uppercase tracking-[0.2em] text-stone-400 group-focus-within:text-[#4B5320] transition-colors">Reason for Connection</label>
-                <select className="w-full bg-transparent border-b border-stone-200 py-4 outline-none focus:border-[#4B5320] transition-all font-serif text-lg appearance-none cursor-pointer text-stone-600">
+                <select name="reason" className="w-full bg-transparent border-b border-stone-200 py-4 outline-none focus:border-[#4B5320] transition-all font-serif text-lg appearance-none cursor-pointer text-stone-600">
                   <option>Membership Application</option>
                   <option>Resource Exchange</option>
                   <option>Cabin Residency</option>
@@ -117,14 +146,21 @@ function Contact() {
               <div className="group relative">
                 <label className="text-[12px] font-black uppercase tracking-[0.2em] text-stone-400 group-focus-within:text-[#4B5320] transition-colors">Your Message</label>
                 <textarea 
+                  name="message"
                   rows="4"
+                  required
                   className="w-full bg-stone-50/50 rounded-2xl p-6 mt-4 outline-none border border-stone-100 focus:border-[#4B5320]/30 focus:bg-white transition-all font-serif text-lg resize-none placeholder:text-stone-300"
                   placeholder="Tell us about your journey..."
                 />
               </div>
 
-              <button className="relative w-full group overflow-hidden bg-[#4B5320] py-6 rounded-2xl shadow-xl shadow-[#4B5320]/20 transition-all hover:shadow-[#4B5320]/40 active:scale-[0.98]">
-                {/* Visual hover effect: subtly darkens the green */}
+              {result && (
+                <div className={`text-center text-sm font-medium ${result === "Form Submitted Successfully" ? "text-green-600" : result === "Error" ? "text-red-600" : "text-stone-500"}`}>
+                  {result}
+                </div>
+              )}
+
+              <button type="submit" className="relative w-full group overflow-hidden bg-[#4B5320] py-6 rounded-2xl shadow-xl shadow-[#4B5320]/20 transition-all hover:shadow-[#4B5320]/40 active:scale-[0.98]">
                 <div className="absolute inset-0 w-0 bg-black/20 transition-all duration-500 group-hover:w-full" />
                 <span className="relative z-10 flex items-center justify-center gap-3 text-white text-[11px] font-black uppercase tracking-[0.4em]">
                   Dispatch Inquiry <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
